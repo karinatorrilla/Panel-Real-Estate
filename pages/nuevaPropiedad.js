@@ -14,12 +14,7 @@ import Swal from 'sweetalert2';
 const NUEVA_PROPIEDAD = gql`
     mutation createProperty($propertyInput: PropertyInput!){
         createProperty(propertyInput: $propertyInput){
-            brokerId
-            address
-            latitude
-            longitude
-            price
-            currency
+            id
         }
     }
 `;
@@ -55,7 +50,7 @@ const nuevaPropiedad= () => {
     const propiedadContext = useContext(PropiedadContext);
     const { broker } = propiedadContext;
     //este se llena cuando seleccione un Broker
-    // console.log(broker);
+    // console.log(broker.id);
     //Mutacion para Crear Propiedad
     const [createPropiedad] = useMutation(NUEVA_PROPIEDAD , {
         update( cache, { data: { createPropiedad } } ) {
@@ -84,20 +79,22 @@ const nuevaPropiedad= () => {
             address : Yup.string()
             .required('La dirección es obligatoria')
         }),
-        onSubmit: async () =>{
-            const { id } = broker.id;
-            // const {address, latitude, longitude, price, currency, broker} = valores
+        onSubmit: async valores =>{
+            
+            const {address, latitude, longitude, price, currency} = valores
             try {
+                console.log(valores);
+                console.log(broker.id);
                 const { data } = await createPropiedad({
+                    
                     variables: {
                         propertyInput: {
-
-                            brokerId: id,
-                            address,
-                            latitude,
-                            longitude,
-                            price,
-                            currency
+                            brokerId: broker.id,
+                            address: address,
+                            latitude: latitude,
+                            longitude: longitude,
+                            price: price,
+                            currency: currency
 
                         }
                     }
