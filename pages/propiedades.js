@@ -1,6 +1,5 @@
 import Layout from '../components/Layout';
 import Propiedad from '../components/Propiedad';
-import nuevaPropiedad from './nuevaPropiedad';
 import { gql, useQuery  } from '@apollo/client';
 import Link from 'next/link';
 
@@ -12,7 +11,7 @@ const LISTADO_PROPIEDADES = gql`
             id
             name
             address
-        }
+        },
         address
         latitude
         longitude
@@ -30,8 +29,7 @@ const  Propiedades = () => {
     const { data, loading, error } = useQuery(LISTADO_PROPIEDADES);
 
     if(loading) return null;
-    
-    const { properties } = data;
+    // console.log(data);
   return (
     <div>
       <Layout>
@@ -46,10 +44,10 @@ const  Propiedades = () => {
                 </a>
             </Link>
           </div>
-        { properties.length === 0 ?(
+        { data.properties.length === 0 ?(
                 <p className="mt-5 text-center text-2xl">No hay listado de propiedades</p>
             ):(
-                properties.map(propiedad =>(
+                data.properties.map(propiedad =>(
                     <Propiedad
                         key={propiedad.id}
                         propiedad={propiedad}

@@ -100,7 +100,7 @@ const nuevoBroker= () => {
         <Layout>
             <h1 className="text-2xl py-2 text-gray-800 font-bold text-left mt-5 leading-5">Nuevo Broker</h1>
             {mensaje && mostrarMensaje()}
-            <div className="flex justify-center mt5">
+            <div className="flex justify-center mt-5">
                 <div className="w-full max-w-lg">
                     <form className="bg-white shadow-md px-8 pt-6 pb-8 mb-4" onSubmit={formik.handleSubmit}>
                         {/* Name */}

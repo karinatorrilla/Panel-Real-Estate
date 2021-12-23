@@ -47,7 +47,7 @@ const AsignarBorker = () => {
 
         <>
             <div className="mb-4">
-                <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor='broker'>Asignar un Broker a la propiedad</label>
+                <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor='broker'>Asignar un broker a la propiedad</label>
                 <Select
 
                     className="mt-3"

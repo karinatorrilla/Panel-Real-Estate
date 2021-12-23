@@ -15,6 +15,17 @@ const NUEVA_PROPIEDAD = gql`
     mutation createProperty($propertyInput: PropertyInput!){
         createProperty(propertyInput: $propertyInput){
             id
+            broker {
+                id
+                name
+                address
+            },
+            address
+            latitude
+            longitude
+            price
+            currency
+
         }
     }
 `;
@@ -22,17 +33,17 @@ const NUEVA_PROPIEDAD = gql`
 const LISTADO_PROPIEDADES = gql`
     query properties{
         properties{
-        id
-        broker {
             id
-            name
+            broker {
+                id
+                name
+                address
+            },
             address
-        }
-        address
-        latitude
-        longitude
-        price
-        currency
+            latitude
+            longitude
+            price
+            currency
         }
     }
 `;
@@ -49,18 +60,19 @@ const nuevaPropiedad= () => {
     //Utilizar context y extraer sus valores
     const propiedadContext = useContext(PropiedadContext);
     const { broker } = propiedadContext;
-    //este se llena cuando seleccione un Broker
-    // console.log(broker.id);
+
     //Mutacion para Crear Propiedad
-    const [createPropiedad] = useMutation(NUEVA_PROPIEDAD , {
-        update( cache, { data: { createPropiedad } } ) {
+    const [ createProperty ] = useMutation(NUEVA_PROPIEDAD , {
+        update( cache, { data: { createProperty } } ) {
             //Obtener el objeto del cache que queremos actualizar(tomamos una copia de lo que hay actualmente en cache)
-            const { propiedades } = cache.readQuery( { query: LISTADO_PROPIEDADES } )
+            const { properties } = cache.readQuery( {
+                 query: LISTADO_PROPIEDADES 
+            } )
             //Reescribo el cache
             cache.writeQuery({
                 query: LISTADO_PROPIEDADES,
                 data: {
-                    propiedades : [...propiedades, createPropiedad]
+                    properties : [...properties, createProperty]
                 }
             })
         }
@@ -83,9 +95,9 @@ const nuevaPropiedad= () => {
             
             const {address, latitude, longitude, price, currency} = valores
             try {
-                console.log(valores);
-                console.log(broker.id);
-                const { data } = await createPropiedad({
+                // console.log(valores);
+                // console.log(broker.id);
+                const { data } = await createProperty({
                     
                     variables: {
                         propertyInput: {
@@ -99,6 +111,7 @@ const nuevaPropiedad= () => {
                         }
                     }
                 });
+                // console.log(data);
                 //Muestro alert de correcto
                 Swal.fire(
                     'Creado',
@@ -106,7 +119,7 @@ const nuevaPropiedad= () => {
                     'success'
                 )
                 //Si todo esta ok, redirecciono a la lista
-                router.push('/propiedades');  
+                router.push('/propiedades');
             } catch (error) {
                 //muestro mensaje de error
                 // console.log(error);
@@ -133,7 +146,7 @@ const nuevaPropiedad= () => {
 
             <h1 className="text-2xl py-2 text-gray-800 font-bold text-left mt-5 leading-5">Nueva Propiedad</h1>
             {mensaje && mostrarMensaje()}
-            <div className="flex justify-center mt5">
+            <div className="flex justify-center mt-5 ">
                 <div className="w-full max-w-lg">
                     <form className="bg-white shadow-md px-8 pt-6 pb-8 mb-4" onSubmit={formik.handleSubmit}>
                         {/* Address */}
