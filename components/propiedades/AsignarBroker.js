@@ -46,18 +46,20 @@ const AsignarBorker = () => {
     return(
 
         <>
-            <p className="mt-10 my-2 bg-white text-gray-700 p-2 text-sm font-blod ">Asignar un Broker a la propiedad</p>
-            <Select
+            <div className="mb-4">
+                <label className="block text-gray-700 text-sm font-bold mb-2 " htmlFor='broker'>Asignar un Broker a la propiedad</label>
+                <Select
 
-                className="mt-3"
-                options={ brokers }
-                onChange={ opcion => seleccionarBroker(opcion) }
-                getOptionValue = { opciones => opciones.id }
-                getOptionLabel = { opciones => opciones.name }
-                placeholder = 'Seleccione un Broker'
-                noOptionsMessage= {() => "No hay resultados"}
+                    className="mt-3"
+                    options={ brokers }
+                    onChange={ opcion => seleccionarBroker(opcion) }
+                    getOptionValue = { opciones => opciones.id }
+                    getOptionLabel = { opciones => opciones.name }
+                    placeholder = 'Seleccione un Broker'
+                    noOptionsMessage= {() => "No hay resultados"}
 
-            />
+                />
+            </div>
         </>
     )
 }

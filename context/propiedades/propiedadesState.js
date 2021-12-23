@@ -31,6 +31,7 @@ const PropiedadState = ({children}) => {
     return(
         <PropiedadContext.Provider
             value={{
+                broker: state.broker,
                 agregarBroker   
             }}
         > 

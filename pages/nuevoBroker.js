@@ -9,6 +9,7 @@ import Swal from 'sweetalert2';
 const NUEVO_BROKER = gql`
     mutation createBroker($brokerInput : BrokerInput! ){
         createBroker(brokerInput : $brokerInput){
+            id
             name
             address
         }
